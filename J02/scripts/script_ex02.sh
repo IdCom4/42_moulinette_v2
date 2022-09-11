@@ -35,7 +35,7 @@ echo -e "${BLUE}-- Compilation --${NC}\n"
 echo -e "$> gcc -o user_exe ${FLAGS} main_ex${EX_NUM}.c ${EX_NAME}.c"
 
 # COMPILE MOULINETTE FILES
-gcc -o ${SCRIPT_LOC}/../${M_EX} ${FLAGS} ${SCRIPT_LOC}/../mains/m_ex${EX_NUM}.c ${SCRIPT_LOC}/../valid_exercices/ex${EX_NUM}.c ${SCRIPT_LOC}/../../common/*.c
+gcc -o ${SCRIPT_LOC}/../${M_EX} ${FLAGS} ${SCRIPT_LOC}/../mains/m_ex${EX_NUM}.c ${SCRIPT_LOC}/../references_files/ex${EX_NUM}.c ${SCRIPT_LOC}/../../common/*.c
 # COMPILE USER FILES
 gcc -o ${U_EX} ${FLAGS} ${SCRIPT_LOC}/../mains/m_ex${EX_NUM}.c ${J_PATH}/ex${EX_NUM}/${EX_NAME}.c ${SCRIPT_LOC}/../../common/*.c  2> error_log
 
