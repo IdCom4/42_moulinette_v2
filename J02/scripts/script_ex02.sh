@@ -42,13 +42,13 @@ gcc -o ${U_EX} ${FLAGS} ${SCRIPT_LOC}/../mains/m_ex${EX_NUM}.c ${J_PATH}/ex${EX_
 # CHECKING COMPILATION ERRORS
 ERROR=`cat error_log`
 
-# STOPE HERE IF ERRORS 
+# STOP HERE IF ERRORS 
 if [ "${ERROR}" != "" ]
 then
 	echo -e "\n====> ${RED}FAILURE${NC} <===="
 	echo -e "Does not compile.\n"
 	exit
-# ELSE PROCEEED
+# ELSE PROCEED
 else
 	echo -e "\n====> ${GREEN}SUCCESS${NC} <===="
 	echo -e "Compilation OK.\n"
