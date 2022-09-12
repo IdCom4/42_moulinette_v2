@@ -1,5 +1,37 @@
-void	ft_putstr(char *str);
-void	ft_putnbr(int n);
+void ft_putchar(char c);
+
+void	ft_putstr(char *str)
+{
+	int index;
+
+	index = 0;
+	while (str[index] != '\0')
+	{
+		ft_putchar(str[index]);
+		index++;
+	}
+}
+
+void	ft_putnbr(int nbr)
+{
+	unsigned int number;
+
+	number = nbr;
+	if (nbr < 0)
+	{
+		ft_putchar('-');
+		number = nbr * -1;
+	}
+	if (number >= 10)
+	{
+		ft_putnbr(number / 10);
+		ft_putnbr(number % 10);
+	}
+	else
+	{
+		ft_putchar(number + 48);
+	}
+}
 
 void  ft_print_current_comb(int *arr, int size) {
   int i = 0;
@@ -39,7 +71,7 @@ void	ft_print_combn(int n)
     while (i > 0 && arr[i] >= 9)
       arr[--i] += 1;
       
-    while (i < n - 1)
-      arr[++i] = arr[i - 1] + 1;
+    while (++i < n - 1)
+      arr[i] = arr[i - 1] + 1;
   }
 }

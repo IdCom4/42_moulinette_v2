@@ -1,7 +1,7 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    script_ex03.sh                                       :+:      :+:    :+:  #
+#    script_ex07.sh                                       :+:      :+:    :+:  #
 #                                                     +:+ +:+         +:+      #
 #    By: idcornua <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
@@ -23,8 +23,8 @@ NC='\033[0m'
 
 # ex & day properties
 J_NUM="02"
-EX_NUM="03"
-EX_NAME="ft_is_negative"
+EX_NUM="07"
+EX_NAME="ft_print_combn"
 USER_PROG="user_${EX_NUM}_exe"
 REF_PROG="moulinette_${EX_NUM}_exe"
 FLAGS='-Wall -Wextra -Werror'
@@ -39,7 +39,7 @@ COMMON_PATH="${SCRIPT_PATH}/../../common"
 
 DEPENDANCIES="${COMMON_PATH}/ft_putchar.c"
 
-echo -e "${ORNG}===================== EX03 =====================\n"
+echo -e "${ORNG}===================== EX07 =====================\n"
 echo -e "" > error_log
 echo -e "${BLUE}-- Compilation --${NC}\n"
 echo -e "$> gcc -o user_exe ${FLAGS} main_ex${EX_NUM}.c ${EX_NAME}.c"
@@ -64,7 +64,7 @@ else
 	echo -e "Compilation OK.\n"
 fi
 
-ARRAY_OF_TEST_VALUES=(-10 -3 -1 0 1 3 10 -2147483648 2147483647)
+ARRAY_OF_TEST_VALUES=(-1 0 1 2 3 4 5 6 7 8 9 10)
 
 for i in "${!ARRAY_OF_TEST_VALUES[@]}";
 do 
