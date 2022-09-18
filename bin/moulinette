@@ -1,0 +1,35 @@
+#!/bin/bash
+
+print_usage() {
+  echo -e "moulinette must be used from within a day directory\n"
+
+  echo -e "Usage:"
+  echo -e "moulinette [ARG]\n"
+
+  echo -e "Where ARG can be one of the following:"
+  echo -e "\tall"
+  echo -e "\t\twill correct all the exercices of the current day\n"
+
+  echo -e "\tex<NUMBER>"
+  echo -e "\t\twill correct only the specified exercice"
+  echo -e "\t\tNUMBER can be between 00 and the max amount of exercice of the current day"
+  echo -e "\t\tExemple: ex02\n"
+}
+
+SCRIPT_PATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+
+J_PATH=$(pwd)
+J_NUM=${J_PATH##*/}
+
+echo -e "\n============ MOULINETTE STARTING ===========\n"
+
+bash ${SCRIPT_PATH}/../${J_NUM}/scripts/script_$1.sh 2> /dev/null
+
+# check if it found the required script
+if [ $? -eq 127 ]
+then
+  if [ -z $1 ]; then echo -e "Error: no argument provided\n"; else echo -e "Error: argument invalid: $1\n"; fi
+  print_usage
+fi
+
+echo -e "\n============== MOULINETTE OUT ==============\n"

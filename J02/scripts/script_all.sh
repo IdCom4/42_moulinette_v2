@@ -1,7 +1,7 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    day_script.sh                                       :+:      :+:    :+:   #
+#    script_all.sh                                       :+:      :+:    :+:   #
 #                                                     +:+ +:+         +:+      #
 #    By: idcornua <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
@@ -28,9 +28,11 @@ EX_AMOUNT=8
 # paths
 SCRIPT_PATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 J_PATH=`pwd`
-POINTS=0
 
- 
+EX_POINTS=()
+TOTAL_POINTS=0
+
+# for each exercise, run his associated script
 for (( EX = 0; EX < $EX_AMOUNT; EX++ ))
 do
   FORMATED_EX=$EX
@@ -40,14 +42,31 @@ do
 
   if [ $(echo $?) -eq "1" ]
   then
-    POINTS=$(echo `expr $POINTS + 1`)
-  fi 
+    EX_POINTS+=("1")
+    ((TOTAL_POINTS=TOTAL_POINTS+1))
+  else
+    EX_POINTS+=("0")
+  fi
 done
 
-RESULTS_PERCENTAGE="$(echo `expr $POINTS \* 100 / ${EX_AMOUNT}`)"
+RESULTS_PERCENTAGE="$(echo `expr $TOTAL_POINTS \* 100 / ${EX_AMOUNT}`)"
 
-echo -e "\n\n${ORNG}===================== FINAL RESULT OF J${J_NUM} =====================\n"
-echo -e "${NC}$POINTS/${EX_AMOUNT} (${RESULTS_PERCENTAGE}%)"
+echo -e "\n\n${ORNG}===================== FINAL RESULT OF J${J_NUM} =====================${NC}\n"
+
+# print out results
+for (( EX = 0; EX < $EX_AMOUNT; EX++ ))
+do
+  FORMATED_EX=$EX
+  if [ $EX -lt 10 ]; then FORMATED_EX="0$EX"; fi
+
+  echo -en "ex${FORMATED_EX} ... "
+  if [ ${EX_POINTS[$EX]} -eq 1 ]
+  then echo -e "[${GREEN}OK${NC}]"
+  else echo -e "[${RED}KO${NC}]"
+  fi
+done
+
+echo -e "\n${NC}Total: $TOTAL_POINTS/${EX_AMOUNT} (${RESULTS_PERCENTAGE}%)"
 
 if [ $RESULTS_PERCENTAGE -lt 80 ]
 then

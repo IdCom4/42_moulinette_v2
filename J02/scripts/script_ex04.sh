@@ -32,12 +32,14 @@ FLAGS='-Wall -Wextra -Werror'
 # paths
 SCRIPT_PATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 J_PATH=`pwd`
-REF_PROG_PATH="${SCRIPT_PATH}/.."
+OUTPUTS_PATH="${SCRIPT_PATH}/../outputs"
 MAINS_PATH="${SCRIPT_PATH}/../mains"
 REF_FILES_PATH="${SCRIPT_PATH}/../references_files"
 COMMON_PATH="${SCRIPT_PATH}/../../common"
 
 DEPENDANCIES="${COMMON_PATH}/ft_putchar.c"
+
+[ -d ${OUTPUTS_PATH} ] || mkdir ${OUTPUTS_PATH}
 
 echo -e "${ORNG}===================== EX04 =====================\n"
 echo -e "" > error_log
@@ -45,9 +47,9 @@ echo -e "${BLUE}-- Compilation --${NC}\n"
 echo -e "$> gcc -o user_exe ${FLAGS} main_ex${EX_NUM}.c ${EX_NAME}.c"
 
 # COMPILE MOULINETTE FILES
-gcc -o ${REF_PROG_PATH}/${REF_PROG} ${FLAGS} ${MAINS_PATH}/m_ex${EX_NUM}.c ${REF_FILES_PATH}/ex${EX_NUM}.c ${DEPENDANCIES}
+gcc -o ${OUTPUTS_PATH}/${REF_PROG} ${FLAGS} ${MAINS_PATH}/m_ex${EX_NUM}.c ${REF_FILES_PATH}/ex${EX_NUM}.c ${DEPENDANCIES}
 # COMPILE USER FILES
-gcc -o ${USER_PROG} ${FLAGS} ${MAINS_PATH}/m_ex${EX_NUM}.c ${J_PATH}/ex${EX_NUM}/${EX_NAME}.c ${DEPENDANCIES}  2> error_log
+gcc -o ${OUTPUTS_PATH}/${USER_PROG} ${FLAGS} ${MAINS_PATH}/m_ex${EX_NUM}.c ${J_PATH}/ex${EX_NUM}/${EX_NAME}.c ${DEPENDANCIES}  2> error_log
 
 # CHECKING COMPILATION ERRORS
 ERROR=`cat error_log`
@@ -55,7 +57,8 @@ ERROR=`cat error_log`
 # STOP HERE IF ERRORS 
 if [ "${ERROR}" != "" ]
 then
-	echo -e "\n====> ${RED}FAILURE${NC} <===="
+	rm ${OUTPUTS_PATH}/* > /dev/null 2>&1
+  echo -e "\n====> ${RED}FAILURE${NC} <===="
 	echo -e "Does not compile.\n"
 	exit
 # ELSE PROCEED
@@ -71,15 +74,15 @@ echo -e "$> ./${USER_PROG} > u_output"
 echo -e "\n$> diff -U 10 u_output m_output > m_diff\n"
 
 # EXECUTING BOTH PROGRAMS
-${SCRIPT_PATH}/../${REF_PROG} > m_output
-./${USER_PROG} > u_output
+${OUTPUTS_PATH}/${REF_PROG} > ${OUTPUTS_PATH}/m_output
+${OUTPUTS_PATH}/${USER_PROG} > ${OUTPUTS_PATH}/u_output
 
 # DIFFING THEM OUT
-diff -U 10 u_output m_output > m_diff
+diff -U 10 ${OUTPUTS_PATH}/u_output ${OUTPUTS_PATH}/m_output > ${OUTPUTS_PATH}/m_diff
 
 # CHECKING DIFF RESULT
-M_DIFF=`cat m_diff`
-rm *_output *_diff  *_log *_exe ${SCRIPT_PATH}/../*_exe
+M_DIFF=`cat ${OUTPUTS_PATH}/m_diff`
+rm ${OUTPUTS_PATH}/* > /dev/null 2>&1
 if [ "${M_DIFF}" != "" ]
 then
 	echo -e "${M_DIFF}"
